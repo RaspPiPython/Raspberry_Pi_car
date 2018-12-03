@@ -1,0 +1,147 @@
+NetworkList:
+noisyLanesNet0.hdf5
+
+
+*******************************************************************************************************************
+*******************************************************************************************************************
+
+
+noisyLanesNet0.hdf5:
+
+F:\Softwares\Anaconda3\envs\keras\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+<INFO> Getting image paths...
+<INFO> Total number of image paths: 3762
+<INFO> Loading images with labels...
+<INFO> Current status of dataset: <class 'numpy.ndarray'> (3762, 64, 64, 1)
+<INFO> Changing dataset value range to [0, 1]...
+<INFO> Converting labels...
+<INFO> Splitting sataset...
+<INFO> Compiling model...
+2018-06-16 18:51:27.205321: I C:\tf_jenkins\workspace\rel-win\M\windows-gpu\PY\36\tensorflow\core\platform\cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
+2018-06-16 18:51:28.292770: I C:\tf_jenkins\workspace\rel-win\M\windows-gpu\PY\36\tensorflow\core\common_runtime\gpu\gpu_device.cc:1105] Found device 0 with properties:
+name: GeForce GTX 860M major: 5 minor: 0 memoryClockRate(GHz): 1.0195
+pciBusID: 0000:01:00.0
+totalMemory: 4.00GiB freeMemory: 3.34GiB
+2018-06-16 18:51:28.301558: I C:\tf_jenkins\workspace\rel-win\M\windows-gpu\PY\36\tensorflow\core\common_runtime\gpu\gpu_device.cc:1195] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 860M, pci bus id: 0000:01:00.0, compute capability: 5.0)
+<INFO> Training network...
+Train on 3009 samples, validate on 753 samples
+Epoch 1/50
+2018-06-16 18:51:36.185258: W C:\tf_jenkins\workspace\rel-win\M\windows-gpu\PY\36\tensorflow\core\common_runtime\bfc_allocator.cc:217] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.16GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory is available.
+3009/3009 [==============================] - 13s 4ms/step - loss: 2.1081 - acc: 0.7527 - val_loss: 1.6638 - val_acc: 0.9031
+Epoch 2/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.6478 - acc: 0.9209 - val_loss: 1.4964 - val_acc: 0.9655
+Epoch 3/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.5157 - acc: 0.9595 - val_loss: 1.4514 - val_acc: 0.9814
+Epoch 4/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4870 - acc: 0.9651 - val_loss: 1.4333 - val_acc: 0.9814
+Epoch 5/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4611 - acc: 0.9721 - val_loss: 1.4214 - val_acc: 0.9854
+Epoch 6/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4348 - acc: 0.9794 - val_loss: 1.4113 - val_acc: 0.9867
+Epoch 7/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4193 - acc: 0.9860 - val_loss: 1.4013 - val_acc: 0.9880
+Epoch 8/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4112 - acc: 0.9864 - val_loss: 1.3939 - val_acc: 0.9907
+Epoch 9/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.4030 - acc: 0.9887 - val_loss: 1.3859 - val_acc: 0.9920
+Epoch 10/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3919 - acc: 0.9914 - val_loss: 1.3780 - val_acc: 0.9920
+Epoch 11/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3808 - acc: 0.9927 - val_loss: 1.3700 - val_acc: 0.9934
+Epoch 12/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3752 - acc: 0.9907 - val_loss: 1.3641 - val_acc: 0.9947
+Epoch 13/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3661 - acc: 0.9930 - val_loss: 1.3583 - val_acc: 0.9947
+Epoch 14/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3649 - acc: 0.9924 - val_loss: 1.3515 - val_acc: 0.9947
+Epoch 15/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3512 - acc: 0.9957 - val_loss: 1.3456 - val_acc: 0.9934
+Epoch 16/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3489 - acc: 0.9950 - val_loss: 1.3391 - val_acc: 0.9934
+Epoch 17/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3442 - acc: 0.9920 - val_loss: 1.3328 - val_acc: 0.9960
+Epoch 18/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3345 - acc: 0.9963 - val_loss: 1.3271 - val_acc: 0.9973
+Epoch 19/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3339 - acc: 0.9947 - val_loss: 1.3213 - val_acc: 0.9973
+Epoch 20/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3221 - acc: 0.9967 - val_loss: 1.3158 - val_acc: 0.9973
+Epoch 21/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3176 - acc: 0.9953 - val_loss: 1.3106 - val_acc: 0.9973
+Epoch 22/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3110 - acc: 0.9967 - val_loss: 1.3054 - val_acc: 0.9960
+Epoch 23/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.3047 - acc: 0.9980 - val_loss: 1.3001 - val_acc: 0.9960
+Epoch 24/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2999 - acc: 0.9963 - val_loss: 1.2944 - val_acc: 0.9987
+Epoch 25/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2951 - acc: 0.9967 - val_loss: 1.2888 - val_acc: 0.9987
+Epoch 26/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2897 - acc: 0.9980 - val_loss: 1.2835 - val_acc: 0.9987
+Epoch 27/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2873 - acc: 0.9963 - val_loss: 1.2782 - val_acc: 0.9987
+Epoch 28/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2771 - acc: 0.9990 - val_loss: 1.2733 - val_acc: 0.9987
+Epoch 29/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2725 - acc: 0.9980 - val_loss: 1.2682 - val_acc: 0.9987
+Epoch 30/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2692 - acc: 0.9977 - val_loss: 1.2630 - val_acc: 0.9987
+Epoch 31/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2647 - acc: 0.9973 - val_loss: 1.2579 - val_acc: 1.0000
+Epoch 32/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2580 - acc: 0.9983 - val_loss: 1.2529 - val_acc: 1.0000
+Epoch 33/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2529 - acc: 0.9977 - val_loss: 1.2485 - val_acc: 1.0000
+Epoch 34/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2460 - acc: 0.9987 - val_loss: 1.2434 - val_acc: 1.0000
+Epoch 35/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2411 - acc: 0.9997 - val_loss: 1.2385 - val_acc: 1.0000
+Epoch 36/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2368 - acc: 0.9987 - val_loss: 1.2334 - val_acc: 1.0000
+Epoch 37/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2324 - acc: 0.9987 - val_loss: 1.2283 - val_acc: 1.0000
+Epoch 38/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2281 - acc: 0.9987 - val_loss: 1.2234 - val_acc: 1.0000
+Epoch 39/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2229 - acc: 0.9987 - val_loss: 1.2187 - val_acc: 1.0000
+Epoch 40/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2177 - acc: 0.9983 - val_loss: 1.2139 - val_acc: 1.0000
+Epoch 41/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2124 - acc: 0.9993 - val_loss: 1.2093 - val_acc: 1.0000
+Epoch 42/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2086 - acc: 0.9990 - val_loss: 1.2046 - val_acc: 1.0000
+Epoch 43/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.2031 - acc: 0.9997 - val_loss: 1.1998 - val_acc: 1.0000
+Epoch 44/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1990 - acc: 0.9983 - val_loss: 1.1953 - val_acc: 0.9987
+Epoch 45/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1954 - acc: 0.9983 - val_loss: 1.1906 - val_acc: 0.9987
+Epoch 46/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1892 - acc: 0.9997 - val_loss: 1.1860 - val_acc: 0.9987
+Epoch 47/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1835 - acc: 0.9997 - val_loss: 1.1815 - val_acc: 0.9987
+Epoch 48/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1805 - acc: 0.9990 - val_loss: 1.1768 - val_acc: 1.0000
+Epoch 49/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1756 - acc: 0.9990 - val_loss: 1.1723 - val_acc: 1.0000
+Epoch 50/50
+3009/3009 [==============================] - 7s 2ms/step - loss: 1.1713 - acc: 0.9993 - val_loss: 1.1678 - val_acc: 1.0000
+<INFO> Evaluating network...
+             precision    recall  f1-score   support
+
+       left       1.00      1.00      1.00       244
+      right       1.00      1.00      1.00       213
+   straight       1.00      1.00      1.00       296
+
+avg / total       1.00      1.00      1.00       753
+
+<INFO> Saving network at noisyLanesNet0.hdf5...
+
+
+*******************************************************************************************************************
+*******************************************************************************************************************
+
+
+

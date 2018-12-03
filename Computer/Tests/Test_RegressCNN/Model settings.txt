@@ -1,0 +1,237 @@
+regressWlanes1: #accuracy 36/42
+    def build(width, height, depth):
+        # initialize the model along with the input shape 
+        # input is expected to be grayscale image so no need for channels
+        model = Sequential()
+        inputShape = (height, width, depth)
+        
+        model.add(Conv2D(16, (3, 3), padding='same', input_shape=inputShape,
+                         kernel_regularizer=regularizers.l2(0.01),
+                         #activity_regularizer=regularizers.l1(0.01)
+                         ))      
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(MaxPooling2D(pool_size=(2, 2)))        
+        model.add(Flatten())
+        
+        model.add(Dense(64))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.25))
+        
+        model.add(Dense(32))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+
+        model.add(Dense(1))
+
+def main():
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths('F:\FH_Frankfurt\Python Adrian\Working Codes\Test_RegressCNN\Data0')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadProccessedLabels(filePaths)
+    data = np.expand_dims(data, axis=3)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=45)
+    
+    print('<INFO> Converting labels to float type...')
+    labels = labels.astype(dtype='float')
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 100
+    learningRate = 0.01
+    decayRate = learningRate/epochNum
+    learningMomentum = 0.9
+    storingLocation = 'regressWlanes2.hdf5'
+    opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    #opt = SGD(lr = learningRate)
+    model = whitelanesNet.build(width=32, height=32, depth=1)
+    model.compile(loss='mean_squared_error', optimizer=opt,
+                  metrics=['accuracy'])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=32, epochs=epochNum, verbose=1)
+
+
+#################################################################################################################
+
+regressWlanes2: 
+class whitelanesNet2: #accuracy 39/42
+    @staticmethod
+    def build(width, height, depth):
+        # initialize the model along with the input shape 
+        # input is expected to be grayscale image so no need for channels
+        model = Sequential()
+        inputShape = (height, width, depth)
+        
+        model.add(Conv2D(16, (3, 3), padding='same', input_shape=inputShape,
+                         kernel_regularizer=regularizers.l2(0.01),
+                         #activity_regularizer=regularizers.l1(0.01)
+                         ))      
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(MaxPooling2D(pool_size=(2, 2)))    
+        
+        model.add(Conv2D(32, (3, 3), padding='same', input_shape=inputShape,
+                         kernel_regularizer=regularizers.l2(0.01),
+                         #activity_regularizer=regularizers.l1(0.01)
+                         ))      
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(MaxPooling2D(pool_size=(2, 2)))         
+        model.add(Flatten())  
+        
+        model.add(Dense(64))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.5))
+        
+        model.add(Dense(32))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        #model.add(Dropout(0.25))
+
+        model.add(Dense(1))
+        
+        
+        return model
+
+def main():    
+    '''from numpy.random import seed
+    seed(1)
+    from tensorflow import set_random_seed
+    set_random_seed(2)'''
+
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths('F:\FH_Frankfurt\Python Adrian\Working Codes\Test_RegressCNN\Data0')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadProccessedLabels(filePaths)
+    data = np.expand_dims(data, axis=3)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=45)
+    
+    print('<INFO> Converting labels to float type...')
+    labels = labels.astype(dtype='float')
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 100
+    learningRate = 0.02
+    decayRate = learningRate/epochNum
+    learningMomentum = 0.9
+    storingLocation = 'regressWlanes2.hdf5'
+    opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    #opt = SGD(lr = learningRate)
+    model = whitelanesNet.build(width=32, height=32, depth=1)
+    model.compile(loss='mean_squared_error', optimizer=opt,
+                  metrics=['accuracy'])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=32, epochs=epochNum, verbose=1)
+
+#############################################################################################################
+
+regressWlanes3:
+
+class whitelanesNet3: #37/42
+    @staticmethod
+    def build(width, height, depth):
+        # initialize the model along with the input shape 
+        # input is expected to be grayscale image so no need for channels
+        model = Sequential()
+        inputShape = (height, width, depth)
+        
+        model.add(Conv2D(16, (3, 3), padding='same', input_shape=inputShape,
+                         kernel_regularizer=regularizers.l2(0.01),
+                         #activity_regularizer=regularizers.l1(0.01)
+                         ))      
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(MaxPooling2D(pool_size=(2, 2)))        
+        model.add(Flatten())  
+        
+        model.add(Dense(64))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.5))
+        
+        model.add(Dense(32))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        #model.add(Dropout(0.25))
+
+        model.add(Dense(1))
+        
+        
+        return model 
+
+def main():    
+    '''from numpy.random import seed
+    seed(1)
+    from tensorflow import set_random_seed
+    set_random_seed(2)'''
+
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths('F:\FH_Frankfurt\Python Adrian\Working Codes\Test_RegressCNN\Data0')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadProccessedLabels(filePaths)
+    data = np.expand_dims(data, axis=3)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=45)
+    
+    print('<INFO> Converting labels to float type...')
+    labels = labels.astype(dtype='float')
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 100
+    learningRate = 0.017
+    decayRate = learningRate/epochNum
+    learningMomentum = 0.9
+    storingLocation = 'regressWlanes3.hdf5'
+    opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    #opt = SGD(lr = learningRate)
+    model = whitelanesNet.build(width=32, height=32, depth=1)
+    model.compile(loss='mean_squared_error', optimizer=opt,
+                  metrics=['accuracy'])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=32, epochs=epochNum, verbose=1)
+
+########################################################################################################
+
+regressWlanes4:

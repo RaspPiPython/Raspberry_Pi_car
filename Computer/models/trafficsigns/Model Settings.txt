@@ -1,0 +1,51 @@
+trafficSign0.hdf5:
+Model setup:
+	model.add(Conv2D(40, (3, 3), padding='same', input_shape=inputShape
+                         #,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+	model.add(Activation('relu'))
+	model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        #model.add(Dropout(0.75))
+        
+        model.add(Conv2D(80, (3, 3), padding='same'
+                         #,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        #model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.75))
+        
+        model.add(Flatten())
+        model.add(Dense(400))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.25))
+        
+        model.add(Dense(classes))
+        model.add(Activation('softmax'))
+
+Training setup:
+    epochNum = 100
+    learningRate = 0.01
+    #decayRate = learningRate/epochNum
+    #learningMomentum = 0.95
+    storingLocation = 'trafficSign0.hdf5'
+    #opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    opt = SGD(lr = learningRate)
+    #model = signNet.build(width = 20, height = 20, depth = 3, classes = 4)
+    model = signNet.build(width = 20, height = 20, depth = 3, classes = 4)
+    model.compile(loss="categorical_crossentropy", optimizer=opt,
+                  metrics=["accuracy"])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=32, epochs=epochNum, verbose=1)
+
+### This model achieved around 90-95% accuracy, and take 0.007s to apply.
+
+########################################################################################################
+trafficSign1.hdf5:

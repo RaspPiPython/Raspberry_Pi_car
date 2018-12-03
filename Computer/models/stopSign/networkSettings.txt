@@ -1,0 +1,338 @@
+stopSignNet0:
+class stopSignNet0:
+    @staticmethod
+    def build(width, height, depth, classes):
+        # initialze the model with "channel last" input
+        model = Sequential()
+        inputShape = (height, width, depth)
+        chanDim = -1 # for "channel last" data 
+        #chanDim = 1 # for "channel first" data 
+        
+        # if we are using "channel first", update the shape
+        if K.image_data_format() == 'channels_first':
+            inputShape = (depth, height, width)
+            
+        # define layers
+        model.add(Conv2D(20, (3, 3), padding='same', input_shape=inputShape
+                         #,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(Conv2D(20, (1, 1), padding='same'
+                         #,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        #model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Conv2D(40, (3, 3), padding='same'
+                         #,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Flatten())
+        model.add(Dense(400))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.25))
+        
+        model.add(Dense(classes))
+        model.add(Activation('softmax'))
+        
+        return model
+
+###############################################################################################################
+
+def main():
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths(r'F:\FH_Frankfurt\Python Adrian\Working Codes\Test_CNN\TrafficSignDouble')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadLabels(filePaths)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    #print('<INFO> Normalizing dataset')
+    #data = CNNFunc.normalizeTo(data, 0.5)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=42)
+    
+    print('<INFO> Converting labels...')
+    #trainY = LabelBinarizer().fit_transform(trainY)    
+    #testY = LabelBinarizer().fit_transform(testY)
+    trainY = CNNFunc.myFitTransform(trainY)
+    testY = CNNFunc.myFitTransform(testY)
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 5
+    learningRate = 0.01
+    #decayRate = learningRate/epochNum
+    #learningMomentum = 0.9
+    storingLocation = 'stopSign0.hdf5'
+    #opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    opt = SGD(lr = learningRate)
+    model = stopSignNet.build(width = 20, height = 20, depth = 3, classes = 2)
+    model.compile(loss="categorical_crossentropy", optimizer=opt,
+                  metrics=["accuracy"])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=32, epochs=epochNum, verbose=1)
+    
+    print('<INFO> Evaluating network...')
+    predictions = model.predict(testX, batch_size=512)
+    print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1),
+                                target_names=['background', 'stopSign']))
+
+
+###############################################################################################################
+###############################################################################################################
+
+
+stopSignNet1:
+same structure as stopSignNet0
+
+###############################################################################################################
+
+main() same as stopSignNet0 except:
+predictions = model.predict(testX, batch_size=1024)
+
+
+###############################################################################################################
+###############################################################################################################
+
+
+stopSignNet2:
+class stopSignNet:
+    @staticmethod
+    def build(width, height, depth, classes):
+        # initialze the model with "channel last" input
+        model = Sequential()
+        inputShape = (height, width, depth)
+        chanDim = -1 # for "channel last" data 
+        #chanDim = 1 # for "channel first" data 
+        
+        # if we are using "channel first", update the shape
+        if K.image_data_format() == 'channels_first':
+            inputShape = (depth, height, width)
+            
+        # define layers
+        model.add(Conv2D(40, (3, 3), padding='same', input_shape=inputShape
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(Conv2D(40, (3, 3), padding='same'
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        #model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Conv2D(80, (3, 3), padding='same'
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Flatten())
+        model.add(Dense(400))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.25))
+        
+        model.add(Dense(classes))
+        model.add(Activation('softmax'))
+        
+        return model
+
+###############################################################################################################
+
+def main():
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths(r'F:\FH_Frankfurt\Python Adrian\Working Codes\Test_CNN\TrafficSignDouble')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadLabels(filePaths)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    # one hot encoding the labels
+    labels = CNNFunc.myFitTransform(labels)
+    
+    #print('<INFO> Normalizing dataset')
+    #data = CNNFunc.normalizeTo(data, 0.5)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=40)
+    
+    print('<INFO> Converting labels...')
+    #trainY = LabelBinarizer().fit_transform(trainY)    
+    #testY = LabelBinarizer().fit_transform(testY)
+    #trainY = CNNFunc.myFitTransform(trainY)
+    #testY = CNNFunc.myFitTransform(testY)
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 20
+    learningRate = 0.001
+    decayRate = learningRate/epochNum
+    learningMomentum = 0.9
+    storingLocation = 'stopSign2.hdf5'
+    opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    #opt = SGD(lr = learningRate)
+    model = stopSignNet.build(width = 20, height = 20, depth = 3, classes = 2)
+    model.compile(loss="categorical_crossentropy", optimizer=opt,
+                  metrics=["accuracy"])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=1024, epochs=epochNum, verbose=1)
+    
+    print('<INFO> Evaluating network...')
+    predictions = model.predict(testX, batch_size=256)
+    print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1),
+                                target_names=['background', 'stopSign']))
+
+
+###############################################################################################################
+###############################################################################################################
+
+
+stopSignNet3:
+class stopSignNet:
+    @staticmethod
+    def build(width, height, depth, classes):
+        # initialze the model with "channel last" input
+        model = Sequential()
+        inputShape = (height, width, depth)
+        chanDim = -1 # for "channel last" data 
+        #chanDim = 1 # for "channel first" data 
+        
+        # if we are using "channel first", update the shape
+        if K.image_data_format() == 'channels_first':
+            inputShape = (depth, height, width)
+            
+        # define layers
+        model.add(Conv2D(40, (3, 3), padding='same', input_shape=inputShape
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(Conv2D(40, (3, 3), padding='same'
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Conv2D(80, (3, 3), padding='same'
+                         ,kernel_regularizer=regularizers.l2(0.01)
+                         #,activity_regularizer=regularizers.l1(0.01)
+                         ))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        
+        model.add(Flatten())
+        model.add(Dense(400))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.25))
+        
+        model.add(Dense(classes))
+        model.add(Activation('softmax'))
+        
+        return model
+
+###############################################################################################################
+
+def main():
+    # get paths to image files
+    print('<INFO> Getting image paths...')
+    filePaths = CNNFunc.paths(r'F:\FH_Frankfurt\Python Adrian\Working Codes\Test_CNN\TrafficSignDouble')
+    print('<INFO> Total number of image paths:', len(filePaths))
+    
+    # load images
+    print('<INFO> Loading images with labels...')
+    (data, labels) = CNNFunc.loadLabels(filePaths)
+    print('<INFO> Current status of dataset:', type(data), data.shape)
+    
+    print('<INFO> Changing dataset value range to [0, 1]...')
+    data = CNNFunc.rangeChange(data, 255.0)
+    
+    # one hot encoding the labels
+    labels = CNNFunc.myFitTransform(labels)
+    
+    #print('<INFO> Normalizing dataset')
+    #data = CNNFunc.normalizeTo(data, 0.5)
+    
+    print('<INFO> Splitting sataset...')
+    (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=40)
+    
+    print('<INFO> Converting labels...')
+    #trainY = LabelBinarizer().fit_transform(trainY)    
+    #testY = LabelBinarizer().fit_transform(testY)
+    #trainY = CNNFunc.myFitTransform(trainY)
+    #testY = CNNFunc.myFitTransform(testY)
+    
+    # initialize model parameters
+    print('<INFO> Compiling model...')
+    epochNum = 25
+    learningRate = 0.001
+    decayRate = learningRate/epochNum
+    learningMomentum = 0.9
+    storingLocation = 'stopSign3.hdf5'
+    opt = SGD(lr=learningRate, decay = decayRate, momentum = learningMomentum, nesterov = True)
+    #opt = SGD(lr = learningRate)
+    model = stopSignNet.build(width = 20, height = 20, depth = 3, classes = 2)
+    model.compile(loss="categorical_crossentropy", optimizer=opt,
+                  metrics=["accuracy"])
+    
+    # training the network
+    print('<INFO> Training network...')
+    H = model.fit(trainX, trainY, validation_data=(testX, testY),
+                  batch_size=1024, epochs=epochNum, verbose=1)
+    
+    print('<INFO> Evaluating network...')
+    predictions = model.predict(testX, batch_size=256)
+    print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1),
+                                target_names=['background', 'stopSign']))
+
+
+###############################################################################################################
+###############################################################################################################
+
+
+stopSignNet4:
